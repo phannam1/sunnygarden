@@ -1,15 +1,14 @@
 package com.Sunnygarden.api;
 
-import com.Sunnygarden.entity.SideBarEntity;
-import com.Sunnygarden.repository.SideBarRepository;
-import java.util.List;
+import com.Sunnygarden.common.RequestUltil;
+import com.Sunnygarden.entity.ContactEntity;
+import com.Sunnygarden.repository.ContactRepository;
+import com.Sunnygarden.request.ContactRequest;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Log4j2
 @RestController
@@ -17,12 +16,16 @@ import org.springframework.web.bind.annotation.RestController;
 @AllArgsConstructor
 public class ServiceController {
 
-    private final SideBarRepository sideBarRepository;
+    private final ContactRepository sideBarRepository;
 
-    @GetMapping(value = "/sidebar")
-    ResponseEntity<String> sideBar(){
-        SideBarEntity sideBar = sideBarRepository
-            .findByRoleIdAndStatus(1L, true).get(0);
-     return new ResponseEntity<>(sideBar.getSideBarName(), HttpStatus.OK);
+    @PostMapping(value = "/contact")
+    ResponseEntity<String> registContact(@RequestBody ContactRequest request){
+        ContactEntity contact = new ContactEntity();
+        contact.setAddress(RequestUltil.BlankIfNull(request.getAddress(),""));
+        contact.setEmail(RequestUltil.BlankIfNull(request.getEmail(),""));
+        contact.setPhone(RequestUltil.BlankIfNull(request.getPhone(),""));
+        contact.setContent(RequestUltil.BlankIfNull(request.getContent(),""));
+        sideBarRepository.save(contact);
+     return new ResponseEntity<>("Send success !", HttpStatus.OK);
     }
 }
