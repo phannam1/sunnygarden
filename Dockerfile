@@ -6,6 +6,6 @@ RUN mvn -f /pom.xml clean package
 # Package stage
 #
 FROM openjdk:11-jre-slim
-COPY --from=build /Sunny-garden/target/Sunny-garden-0.0.1-SNAPSHOT.jar /sunnygarden.jar
+COPY --from=build /target/Sunny-garden-0.0.1-SNAPSHOT.jar /sunnygarden.jar
 EXPOSE 8081
 ENTRYPOINT ["java","-jar","/sunnygarden.jar"]
