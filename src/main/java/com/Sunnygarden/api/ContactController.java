@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(value = "/api")
 @AllArgsConstructor
-public class ServiceController {
+public class ContactController {
 
-    private final ContactRepository sideBarRepository;
+    private final ContactRepository contactRepository;
 
     @PostMapping(value = "/contact")
     ResponseEntity<String> registContact(@RequestBody ContactRequest request){
@@ -25,7 +25,7 @@ public class ServiceController {
         contact.setEmail(RequestUltil.BlankIfNull(request.getEmail(),""));
         contact.setPhone(RequestUltil.BlankIfNull(request.getPhone(),""));
         contact.setContent(RequestUltil.BlankIfNull(request.getContent(),""));
-        sideBarRepository.save(contact);
+        contactRepository.save(contact);
      return new ResponseEntity<>("Send success !", HttpStatus.OK);
     }
 }
