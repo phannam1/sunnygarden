@@ -27,15 +27,13 @@ public class ServiceController {
     @GetMapping(value = "/service")
     public ResponseEntity<ServiceResponse> services(){
         ServiceResponse serviceEntities = new ServiceResponse();
-        serviceEntities.setServiceEntities(serviceRepository.findAll());
+        serviceEntities.setServiceEntities(serviceRepository.findAllSortByCreateDate());
         return new ResponseEntity<>(serviceEntities, HttpStatus.OK);
     }
     @GetMapping(value = "/service-detail")
     public ResponseEntity<ServiceDetailResponse> serviceDetail(@RequestParam("serviceId") Long serviceId){
-        ServiceEntity serviceEntities = new ServiceEntity();
-        serviceEntities.setId(serviceId);
         ServiceDetailResponse serviceDetailResponse = new ServiceDetailResponse();
-        serviceDetailResponse.setServiceDetails(serviceDetailRepository.findAllByService(serviceEntities));
+        serviceDetailResponse.setServiceDetails(serviceDetailRepository.findAllByServiceSortById(serviceId));
         return new ResponseEntity<>(serviceDetailResponse, HttpStatus.OK);
     }
 
