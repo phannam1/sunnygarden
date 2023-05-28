@@ -17,6 +17,8 @@ public class ContactEntity {
 	@javax.persistence.Id
 	@GeneratedValue
 	private Long Id;
+	@Column(name = "name")
+	private String name;
 	@Column(name = "email")
 	private String email;
 	@Column(name = "address")
@@ -25,5 +27,7 @@ public class ContactEntity {
 	private String phone;
 	@Column(name = "content",length = 1000)
 	private String content;
+	@Column(name = "createdate")
+	private String createDate;
 
 }
